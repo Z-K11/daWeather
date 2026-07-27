@@ -1,3 +1,5 @@
 import { location } from './currentLocation.js';
+import apiProcessor from './apiHandler.js';
 const locationString = await location;
-console.log(locationString);
+const weatherApi = new apiProcessor(locationString);
+weatherApi.showPosition();
