@@ -3,17 +3,17 @@ export default class jsonProcessor {
   constructor(json) {
     this.#data = json;
   }
-  returnWeatherDara() {
+  returnWeatherData() {
     return this.#data.days.map((day, index) => {
       return {
         forDay: index + 1,
         date: day.datetime,
         max: day.tempmax,
-        min: day.tempin,
+        min: day.tempmin,
         temp: day.temp,
         feelsLike: day.feelslike,
         humidity: day.humidity,
-        rainfall: day.preciprob,
+        rainfall: day.precipprob,
         description: day.conditions,
         icon: day.icon,
       };
