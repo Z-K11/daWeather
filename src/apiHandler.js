@@ -7,9 +7,11 @@ export default class apiProcessor {
   #dataHandler;
 
   constructor(locationString) {
-    this.#locationString = locationString.split(',');
-    this.#latitude = this.#locationString[0];
-    this.#longitute = this.#locationString[1];
+    if (locationString) {
+      this.#locationString = locationString.split(',');
+      this.#latitude = this.#locationString[0];
+      this.#longitute = this.#locationString[1];
+    } else console.log('Location access denied by user');
   }
   showPosition() {
     console.log(`Latitude = ${this.#latitude},Longitute = ${this.#longitute}`);
@@ -17,8 +19,13 @@ export default class apiProcessor {
   returnPosition() {
     return `${this.#latitude},${this.#longitute}`;
   }
-  async getData() {
-    const apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.returnPosition()}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+  async getData(address) {
+    let apiQuery;
+    if (address) {
+      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${address}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+    } else {
+      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.returnPosition()}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+    }
     const response = await fetch(apiQuery);
     const responseJson = await response.json();
     this.#dataHandler = new jsonHandler(responseJson);
