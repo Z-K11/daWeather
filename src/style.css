@@ -25,32 +25,52 @@ body {
   height: 4rem;
   display: flex;
 }
-#search {
+.search {
   flex: 1;
   /* height: 100%; */
   border-radius: 2rem 0 0 2rem;
   font-size: 1.8rem;
   padding: 0 5%;
 }
-#search:focus {
+.search:focus {
   border: none;
   outline: none;
 }
-#options {
+.options {
   width: 15%;
   border-radius: 0 2rem 2rem 0;
   font-size: 2rem;
 }
-#options,
-#search {
+.options,
+.search {
   background-color: var(--mainDark, blue);
   border: none;
   color: var(--mainFont, purple);
 }
-span.hidden {
-  display: none;
-}
 
 .error {
   display: block;
+  font-size: 1.6rem;
+  color: var(--mainFont, skyblue);
+  text-align: center;
+  padding: 2% 4%;
+  background-color: var(--mainDark, purple);
+  border-radius: 0 0 2rem 2rem;
+}
+
+.displayOptionsInput {
+  border-radius: 2rem 0 0 0;
+  padding-top: 3%;
+}
+.displayOptionsButton {
+  border-radius: 0 2rem 0 0;
+}
+.line {
+  height: 0.2rem;
+  background-color: white;
+  width: 90%;
+  margin: -7px auto 1rem auto;
+}
+.hidden {
+  display: none;
 }
