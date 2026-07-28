@@ -17,6 +17,7 @@ export default class domManipulator {
         }
         if (city) {
           console.log(city);
+          this.#searchBar.value = '';
         }
       }
     });
