@@ -99,7 +99,7 @@ export default class domManipulator {
       const sunrise = document.createElement('p');
       sunrise.textContent = `Sunrise : ${dayjs(`${element.date} ${element.sunrise}`).format('h:mm A')}`;
       const sunset = document.createElement('p');
-      sunset.textContent = `Sunrise : ${dayjs(`${element.date} ${element.sunset}`).format('h:mm A')}`;
+      sunset.textContent = `Sunset : ${dayjs(`${element.date} ${element.sunset}`).format('h:mm A')}`;
       weatherData.append(feelsLike, rainfall, humidity, sunrise, sunset);
       weatherInfoWrapper.append(description, weatherData);
       dataDiv.append(city, iconDiv, date, tempDiv, avgDiv, weatherInfoWrapper);
