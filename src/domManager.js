@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { checkAddress } from './addressValidator.js';
 export default class domManipulator {
   #searchBar;
   #options;
@@ -46,9 +47,13 @@ export default class domManipulator {
     });
   }
   appendToDom() {
+    let cityName;
     const apiData = this.#apiObject.returnApiData();
-    const cityName = this.#apiObject.returnCityName();
+    if (checkAddress(this.#apiObject.returnCityName()))
+      cityName = this.#apiObject.returnCityName();
+    else cityName = '';
     this.#apiBody = document.querySelector('.apiData');
+    this.#apiBody.innerHTML = '';
     // 1,1,3,4,5,6,7,8,9,10,11
     apiData.forEach(async (element) => {
       const dataDiv = document.createElement('div');
@@ -99,5 +104,9 @@ export default class domManipulator {
       weatherInfoWrapper.append(description, weatherData);
       dataDiv.append(city, iconDiv, date, tempDiv, avgDiv, weatherInfoWrapper);
     });
+  }
+  async defaultCity() {
+    await this.#apiObject.getData();
+    this.appendToDom();
   }
 }

@@ -26,6 +26,7 @@ export default class apiProcessor {
     }
     const response = await fetch(apiQuery);
     const responseJson = await response.json();
+    console.log(responseJson);
     this.#dataHandler = new jsonHandler(responseJson);
   }
   returnApiData() {

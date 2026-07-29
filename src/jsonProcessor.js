@@ -2,6 +2,7 @@ export default class jsonProcessor {
   #data;
   constructor(json) {
     this.#data = json;
+    console.log('json Received');
   }
   returnResolvedAddress() {
     return this.#data.resolvedAddress;

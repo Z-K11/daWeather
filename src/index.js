@@ -7,6 +7,7 @@ const dom = new domModder(weatherApi);
 try {
   const locationString = await location;
   weatherApi.getPosition(locationString);
+  await dom.defaultCity();
 } catch (error) {
   console.log(`This is the error : ${error}`);
 }

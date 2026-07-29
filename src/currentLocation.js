@@ -10,7 +10,8 @@ export const location = (() => {
         },
         (err) => {
           reject(err);
-        }
+        },
+        { timeout: 5000 }
       );
     }
   });
