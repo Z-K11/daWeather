@@ -20,9 +20,9 @@ export default class apiProcessor {
   async getData(address) {
     let apiQuery;
     if (address) {
-      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${address}/next1days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${address}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
     } else {
-      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.returnPosition()}/next1days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.returnPosition()}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
     }
     const response = await fetch(apiQuery);
     const responseJson = await response.json();
@@ -30,5 +30,8 @@ export default class apiProcessor {
   }
   returnApiData() {
     return this.#dataHandler.returnWeatherData();
+  }
+  returnCityName() {
+    return this.#dataHandler.returnResolvedAddress();
   }
 }

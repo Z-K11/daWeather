@@ -3,6 +3,9 @@ export default class jsonProcessor {
   constructor(json) {
     this.#data = json;
   }
+  returnResolvedAddress() {
+    return this.#data.resolvedAddress;
+  }
   returnWeatherData() {
     return this.#data.days.map((day, index) => {
       return {

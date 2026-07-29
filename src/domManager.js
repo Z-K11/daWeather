@@ -24,6 +24,7 @@ export default class domManipulator {
           this.#searchBar.value = '';
           await this.#apiObject.getData(city);
           console.log(this.#apiObject.returnApiData());
+          // console.log(this.#apiObject.returnCityName());
           this.appendToDom();
         }
       }
@@ -46,11 +47,15 @@ export default class domManipulator {
   }
   appendToDom() {
     const apiData = this.#apiObject.returnApiData();
+    const cityName = this.#apiObject.returnCityName();
     this.#apiBody = document.querySelector('.apiData');
     // 1,1,3,4,5,6,7,8,9,10,11
     apiData.forEach(async (element) => {
       const dataDiv = document.createElement('div');
       dataDiv.classList.add('dataDiv');
+      const city = document.createElement('p');
+      city.classList.add('city');
+      city.textContent = cityName;
       const iconDiv = document.createElement('div');
       iconDiv.classList.add('iconDiv');
       const icon = document.createElement('img');
@@ -92,7 +97,7 @@ export default class domManipulator {
       sunset.textContent = `Sunrise : ${dayjs(`${element.date} ${element.sunset}`).format('h:mm A')}`;
       weatherData.append(feelsLike, rainfall, humidity, sunrise, sunset);
       weatherInfoWrapper.append(description, weatherData);
-      dataDiv.append(iconDiv, date, tempDiv, avgDiv, weatherInfoWrapper);
+      dataDiv.append(city, iconDiv, date, tempDiv, avgDiv, weatherInfoWrapper);
     });
   }
 }
