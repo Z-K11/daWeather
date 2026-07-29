@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 export default class domManipulator {
   #searchBar;
   #options;
@@ -73,7 +74,25 @@ export default class domManipulator {
       temp.textContent = element.temp + 'C';
       avgDiv.appendChild(temp);
       avgDiv.classList.add('temp');
-      dataDiv.append(iconDiv, date, tempDiv, avgDiv);
+      const weatherInfoWrapper = document.createElement('div');
+      const weatherData = document.createElement('div');
+      weatherData.classList.add('weatherData');
+      weatherInfoWrapper.classList.add('infoWrapper');
+      const description = document.createElement('p');
+      description.textContent = element.description;
+      const rainfall = document.createElement('p');
+      rainfall.textContent = `Chances of rain : ${element.rainfall}%`;
+      const humidity = document.createElement('p');
+      humidity.textContent = `Humidity : ${element.humidity}`;
+      const feelsLike = document.createElement('p');
+      feelsLike.textContent = `Feels Like : ${element.feelsLike}C`;
+      const sunrise = document.createElement('p');
+      sunrise.textContent = `Sunrise : ${dayjs(`${element.date} ${element.sunrise}`).format('h:mm A')}`;
+      const sunset = document.createElement('p');
+      sunset.textContent = `Sunrise : ${dayjs(`${element.date} ${element.sunset}`).format('h:mm A')}`;
+      weatherData.append(feelsLike, rainfall, humidity, sunrise, sunset);
+      weatherInfoWrapper.append(description, weatherData);
+      dataDiv.append(iconDiv, date, tempDiv, avgDiv, weatherInfoWrapper);
     });
   }
 }
