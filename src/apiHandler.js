@@ -6,12 +6,10 @@ export default class apiProcessor {
   #apiKey = '9PS3QFHCD4X5LX5BV4R68PQ73';
   #dataHandler;
 
-  constructor(locationString) {
-    if (locationString) {
-      this.#locationString = locationString.split(',');
-      this.#latitude = this.#locationString[0];
-      this.#longitute = this.#locationString[1];
-    } else console.log('Location access denied by user');
+  getPosition(locationString) {
+    this.#locationString = locationString.split(',');
+    this.#latitude = this.#locationString[0];
+    this.#longitute = this.#locationString[1];
   }
   showPosition() {
     console.log(`Latitude = ${this.#latitude},Longitute = ${this.#longitute}`);
@@ -22,14 +20,15 @@ export default class apiProcessor {
   async getData(address) {
     let apiQuery;
     if (address) {
-      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${address}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${address}/next1days?unitGroup=metric&include=days&key=${this.#apiKey}`;
     } else {
-      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.returnPosition()}/next6days?unitGroup=metric&include=days&key=${this.#apiKey}`;
+      apiQuery = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.returnPosition()}/next1days?unitGroup=metric&include=days&key=${this.#apiKey}`;
     }
     const response = await fetch(apiQuery);
     const responseJson = await response.json();
     this.#dataHandler = new jsonHandler(responseJson);
-    console.log(this.#dataHandler.returnWeatherData());
-    console.log(responseJson);
+  }
+  returnApiData() {
+    return this.#dataHandler.returnWeatherData();
   }
 }

@@ -16,6 +16,8 @@ export default class jsonProcessor {
         rainfall: day.precipprob,
         description: day.conditions,
         icon: day.icon,
+        sunrise: day.sunrise,
+        sunset: day.sunset,
       };
     });
   }

@@ -2,13 +2,16 @@ export default class domManipulator {
   #searchBar;
   #options;
   #regex = /^\p{L}+(?:[\s\-']\p{L}+)*$/u;
-  constructor() {
+  #apiObject;
+  #apiBody;
+  constructor(weatherApi) {
     this.#searchBar = document.querySelector('#search');
     this.#options = document.querySelector('#options');
+    this.#apiObject = weatherApi;
     let span = document.querySelector('#error');
     let spanDiv = document.querySelector('.spanDiv');
     let styleLine = document.querySelector('#line');
-    this.#searchBar.addEventListener('keydown', (event) => {
+    this.#searchBar.addEventListener('keydown', async (event) => {
       if (event.key === 'Enter') {
         let city;
         event.preventDefault();
@@ -18,6 +21,9 @@ export default class domManipulator {
         if (city) {
           console.log(city);
           this.#searchBar.value = '';
+          await this.#apiObject.getData(city);
+          console.log(this.#apiObject.returnApiData());
+          this.appendToDom();
         }
       }
     });
@@ -35,6 +41,39 @@ export default class domManipulator {
         this.#searchBar.classList.remove('displayOptionsInput');
         this.#options.classList.remove('displayOptionsButton');
       }
+    });
+  }
+  appendToDom() {
+    const apiData = this.#apiObject.returnApiData();
+    this.#apiBody = document.querySelector('.apiData');
+    // 1,1,3,4,5,6,7,8,9,10,11
+    apiData.forEach(async (element) => {
+      const dataDiv = document.createElement('div');
+      dataDiv.classList.add('dataDiv');
+      const iconDiv = document.createElement('div');
+      iconDiv.classList.add('iconDiv');
+      const icon = document.createElement('img');
+      this.#apiBody.appendChild(dataDiv);
+      iconDiv.appendChild(icon);
+      icon.src = new URL(`./assets/icons/${element.icon}.png`, import.meta.url);
+      const dateDiv = document.createElement('div');
+      const date = document.createElement('p');
+      date.classList.add('date');
+      date.textContent = `Date : ${element.date}`;
+      dataDiv.appendChild(dateDiv);
+      const tempDiv = document.createElement('div');
+      const maxTemp = document.createElement('p');
+      const minTemp = document.createElement('p');
+      tempDiv.append(maxTemp, minTemp);
+      tempDiv.classList.add('tempRange');
+      maxTemp.textContent = `Max : ${element.max}C`;
+      minTemp.textContent = `Min : ${element.min}C`;
+      const avgDiv = document.createElement('div');
+      const temp = document.createElement('p');
+      temp.textContent = element.temp + 'C';
+      avgDiv.appendChild(temp);
+      avgDiv.classList.add('temp');
+      dataDiv.append(iconDiv, date, tempDiv, avgDiv);
     });
   }
 }
